@@ -9,7 +9,7 @@
 import UIKit
 
 class MagicMoveTransion: NSObject, UIViewControllerAnimatedTransitioning {
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.5
     }
     
@@ -21,7 +21,7 @@ class MagicMoveTransion: NSObject, UIViewControllerAnimatedTransitioning {
         
         //2.创建一个 Cell 中 imageView 的截图，并把 imageView 隐藏，造成使用户以为移动的就是 imageView 的假象
         let snapshotView = fromVC.selectedCell.imageView.snapshotViewAfterScreenUpdates(false)
-        snapshotView.frame = container.convertRect(fromVC.selectedCell.imageView.frame, fromView: fromVC.selectedCell)
+        snapshotView.frame = container!.convertRect(fromVC.selectedCell.imageView.frame, fromView: fromVC.selectedCell)
         fromVC.selectedCell.imageView.hidden = true
         
         //3.设置目标控制器的位置，并把透明度设为0，在后面的动画中慢慢显示出来变为1
@@ -29,8 +29,8 @@ class MagicMoveTransion: NSObject, UIViewControllerAnimatedTransitioning {
         toVC.view.alpha = 0
         
         //4.都添加到 container 中。注意顺序不能错了
-        container.addSubview(toVC.view)
-        container.addSubview(snapshotView)
+        container!.addSubview(toVC.view)
+        container!.addSubview(snapshotView)
         
         //5.执行动画
         /*
